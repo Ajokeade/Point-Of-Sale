@@ -1,0 +1,92 @@
+﻿@model POSmvc.Models.Sales
+
+@{
+    ViewData["Title"] = "Create";
+}
+<script type="text/javascript">
+   
+</script>
+
+<h2>Create</h2>
+
+<h4>Sales</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+            <label asp-for="CategoryID" class="control-label"></label>
+            <select asp-for="CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
+        </div>*@
+
+            <div class="form-group">
+                <label class="control-label">Make Purchase</label>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerID" class="control-label">Customer Name</label>
+                <select asp-for="CustomerID" class="form-control" asp-items="ViewBag.CustomerID"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Transaction ID</label>
+                <input asp-for="TransctionID" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <label class="control-label">Product Category</label>
+                <select id="selectedCategory" onchange="showCats()" class="form-control" asp-items="ViewBag.Category"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Product Name</label>
+                <select id="productListforSelectedCategory" class="form-control" onchange="GetProductPrice()"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Price</label>
+                <p id="ProductPrice" class="form-control" ></p>
+
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Quantity</label>
+                <input id="Quantity" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label"> SubTotal</label>
+                <input id="SubTotal" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TotalAmount" class="control-label"></label>
+                <input asp-for="TotalAmount" class="form-control" />
+                <span asp-validation-for="TotalAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountPaid" class="control-label"></label>
+                <input asp-for="AmountPaid" class="form-control" />
+                <span asp-validation-for="AmountPaid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Balance" class="control-label"></label>
+                <input asp-for="Balance" class="form-control" />
+                <span asp-validation-for="Balance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TranscationDate" class="control-label"></label>
+                <input asp-for="TranscationDate" class="form-control" />
+                <span asp-validation-for="TranscationDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

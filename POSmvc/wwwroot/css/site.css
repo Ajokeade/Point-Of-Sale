@@ -1,0 +1,97 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    /*   background-color: #f2f2f2;
+    background-color: cornflowerblue; */
+    /*background-color: #D7CEC7;*/
+    background-color: #727077 ;
+}
+
+/* Wrapping element */
+    /* Set some basic padding to keep content from hitting the edges */
+    .body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.special-btn{
+    background-color: grey;
+    color: papayawhip;
+}
+    .special-btn:hover {
+        background-color: papayawhip;
+        color: grey;
+    }
+
+
+.Inverse-special-btn {
+    
+    background-color: papayawhip;
+    color: grey;
+}
+
+    .Inverse-special-btn:hover {
+        background-color: grey;
+        color: papayawhip;
+    }
+
+
+.thead {
+    background-color: #76323F;
+    color: white;
+}
+
+.tanColor {
+    background-color: #c09f80;
+    color: white;
+}
+.PanelColor {
+    background-color: #a49592;
+}
+
+
+/*.centerModal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}*/
+
+centered-modal.in {
+    display: flex !important;
+}
+
+.centered-modal .modal-dialog {
+    margin: auto;
+}
+
+/*$("#fade").modal({
+  fadeDuration: 1000,
+  fadeDelay: 0.50
+});*/

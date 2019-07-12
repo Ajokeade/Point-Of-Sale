@@ -1,0 +1,239 @@
+﻿@model POSmvc.Models.PosViewModel.MakeSalesData
+@*@{
+        ViewData["Title"] = "Index";
+    }*@
+
+
+<!-- Remember to include jQuery :) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+<!-- jQuery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<div class="form-group text-center">
+    <h2 class="control-label ">Make Sales</h2>
+
+</div>
+<div class="row panel container PanelColor">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
+        <div class="row">
+            <h4 class="control-label ">Enter Details</h4>
+            
+            <div class="form-group col-md-6  ">
+                <label class="control-label">Customer Name</label>
+                <select class="form-control " asp-items="ViewBag.CustomerID" id="customer">
+                    <option value="">-- Select Customer--</option>
+                </select><span>
+                    <a class="btn btn-default   tanColor" asp-area="" asp-controller="Customers" asp-action="Create">New Customer &raquo;</a>
+                </span>
+
+
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label"> Transaction ID</label>
+                <p class="form-control" id="transactionID"></p>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="control-label">Product Category</label>
+                    <select id="selectedCategory" onchange="showCats()" class="form-control" asp-items="ViewBag.Category">
+                        <option value="">-- Select Category--</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Product Name</label>
+                    <select id="productListforSelectedCategory" class="form-control" onchange="GetProductPrice()">
+                        <option value="">-- Select Product--</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="control-label"> Price</label>
+                    <p id="ProductPrice" class="form-control"></p>
+
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label"> Quantity</label>
+                    <input id="Quantity" class="form-control" onkeyup="getSubtotal()" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group  col-md-6">
+                    <label class="control-label"> SubTotal</label>
+                    <p id="SubTotal" class="form-control" />
+                </div>
+                <div class="form-group col-md-6 ">
+                    <label class="control-label">Add Product to cart</label><br />
+                    <input value="Add-to-Cart" class="btn thead " onclick="AddToCart()" />
+                </div>
+            </div>
+
+</form>
+
+</div>
+
+
+<div class="row panel container PanelColor">
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                    <label asp-for="CategoryID" class="control-label"></label>
+                    <select asp-for="CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
+                </div>*@
+
+            
+            <hr />
+            <div class="row">
+                <div class="col-md-5">
+                    <h3 class="text-center">Products Cart</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Quantity Purchase
+                                </th>
+                                <th>
+                                    SubTotal
+                                </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="orderDetailsTable"></tbody>
+                    </table>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="row col-md-4">
+                    <h3>Make Payement</h3>
+                    <div class="form-group ">
+                        <label class="control-label">Total Amount</label>
+                        <p class="form-control col-md-4" id="TotalAmount"></p>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label">Amount Paid</label>
+                        <input class="form-control" id="AmountPaid" onkeyup="ComputeBalance()" />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label">Change</label>
+                        <input class="form-control" id="Change" />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group   col-md-6">
+                        <input type="submit" value="Buy" class="btn tanColor" onclick="PrintReceipt()" />
+                    </div>
+                </div>
+
+
+
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<!-- Modal HTML embedded directly into document -->
+<div class="modal fade" id="ex2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="addUserForm">
+                <div class="modal-header modal-header-bg">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add User</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input id="firstName" type="text" class="form-control" placeholder="first name">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input id="lastName" type="text" class="form-control" placeholder="Name">
+                    </div>
+                    <div class="form-group ">
+                        <label>Gender</label><br>
+                        <input type="radio" name="optradio" checked><label>   Male</label>
+                        <input type="radio" name="optradio"> <label> Female</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input id="email" class="form-control" type="email" placeholder="enter email">
+                    </div>
+                    <div class="form-group">
+                        <label>Date Joined</label>
+                        <input id="dateJoined" class="form-control" type="date">
+                    </div>
+                    <div class="form-group">
+
+                        <label>Upload Passport</label>
+                        <input type="file" class="form-control" placeholder='Choose a file...' />
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal HTML embedded directly into document -->
+<div id="ex1" class="modal">
+    <p>Thanks for your Patronage. Hope to see you soon.</p>
+    <a href="#" rel="modal:close">Close</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Quantity Purchase
+                </th>
+                <th>
+                    <Label>SubTotal</Label>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="TransactionDetailsTable"></tbody>
+    </table>
+</div>
+
+<!-- Link to open the modal -->
+<p><a href="#ex1" rel="modal:open">Open Modal</a></p>
+
+
+
+
+
+
+
